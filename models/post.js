@@ -8,4 +8,14 @@ const PostSchema = new Schema({
   summary: { type: String, required: true }
 });
 
+PostSchema.pre("save", function(next) {
+    const now = new Date();
+    this.updateAt = now;
+
+    if (!this.createdAt) {
+        this.createdAt = now;
+    }
+    next();
+});
+
 module.exports = mongoose.model("Post", PostSchema);
