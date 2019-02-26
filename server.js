@@ -5,14 +5,14 @@ const app = express()
 // const Post = require('../models/post');
 
 
-// Set db
-require('./data/reddit-db');
-require('./controllers/posts.js')(app);
+
 var exphbs = require('express-handlebars');
 // Use Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
+// Set db
+require('./data/reddit-db');
+require('./controllers/posts.js')(app);
 
 // Add after body parser initialization!
 app.use(expressValidator());
