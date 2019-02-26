@@ -1,4 +1,8 @@
 const Post = require('../models/post');
+const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const express = require('express')
+const app = express()
 
 module.exports = (app) => {
 
@@ -10,7 +14,6 @@ module.exports = (app) => {
     //   .catch(err => {
     //     console.log(err.message);
     })
-
 
 
   // CREATE
@@ -26,14 +29,21 @@ module.exports = (app) => {
         }
       // REDIRECT TO THE ROOT
       return res.redirect(`/`);
-
-
     })
   });
   app.get
-
 };
 
+app.get("/posts/:id", function(req, res) {
+  // LOOK UP THE POST
+  Post.findById(req.params.id)
+    .then(post => {
+      res.render("posts-show", { post });
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
+});
 
 
 
