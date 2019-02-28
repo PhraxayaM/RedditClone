@@ -8,7 +8,8 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         Post.find({})
       .then(posts => {
-        res.render("posts-index", { posts });
+          console.log(posts)
+        res.render("posts-show", { posts });
       })
       .catch(err => {
         console.log(err.message);
@@ -52,6 +53,7 @@ module.exports = (app) => {
          console.log(err);
        });
    });
+}
 
 
 // app.get('/', (req, res) => {
