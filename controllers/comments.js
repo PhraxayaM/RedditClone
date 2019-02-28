@@ -1,6 +1,6 @@
+const Comment = require('../models/comment');
 
 module.exports = function(app) {
-    require('./controllers/comments.js')(app);
 
     // CREATE Comment
 app.post("/posts/:postId/comments", function(req, res) {

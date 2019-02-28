@@ -4,7 +4,7 @@ const Comment = require('../models/comment');
 
 
 const CommentSchema = new Schema({
-    content: { type: String, required: True }
+    content: { type: String, required: true }
 
 });
 

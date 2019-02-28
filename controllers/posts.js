@@ -8,7 +8,6 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         Post.find({})
       .then(posts => {
-          console.log(posts)
         res.render("posts-show", { posts });
       })
       .catch(err => {
@@ -37,6 +36,7 @@ module.exports = (app) => {
       // LOOK UP THE POST
       Post.findById(req.params.id)
         .then(post => {
+            console.log(post)
           res.render("posts-show", { post });
         })
         .catch(err => {

@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Set db
 require('./data/reddit-db');
 require('./controllers/posts.js')(app);
+require('./controllers/comments.js')(app);
+
 
 // Add after body parser initialization!
 app.use(expressValidator());

@@ -1,12 +1,11 @@
 <div class="row">
+  {{#each posts}}
   <div class="col-sm-6 col-sm-offset-3">
-      {{#each posts}}
+
         <a href="{{this.url}}" class="lead">{{this.title}}</a>
         <p>{{this.summary}}</p>
-      {{/each}}
   </div>
 </div>
-{{#each posts}}
     <form action="/posts/{{this._id}}/comments" method="post">
        <textarea class='form-control' name="content" placeholder="Comment"></textarea>
        <div class="text-right">
