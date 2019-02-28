@@ -19,7 +19,7 @@ describe('Posts', function() {
       title: 'post title',
       url: 'https://www.google.com',
       summary: 'post summary'
- 
+
   };
 
 it('Should create with valid attributes at POST /posts/new', function(done) {
