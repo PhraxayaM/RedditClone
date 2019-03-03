@@ -9,7 +9,7 @@ module.exports = (app) => {
     app.get('/', (req, res) => {
         Post.find({})
       .then(posts => {
-        res.render("posts-index", { posts });
+        res.render("sign-up", { posts });
       })
       .catch(err => {
         console.log(err.message);
