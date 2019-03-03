@@ -3,12 +3,13 @@ const expressValidator = require('express-validator');
 const express = require('express')
 const app = express()
 
+
 module.exports = (app) => {
 
     app.get('/', (req, res) => {
         Post.find({})
       .then(posts => {
-        res.render("posts-show", { posts });
+        res.render("posts-index", { posts });
       })
       .catch(err => {
         console.log(err.message);
@@ -33,16 +34,25 @@ module.exports = (app) => {
   });
  // Show
     app.get("/posts/:id", function(req, res) {
-      // LOOK UP THE POST
-      Post.findById(req.params.id)
-        .then(post => {
-            console.log(post)
-          res.render("posts-show", { post });
-        })
-        .catch(err => {
-          console.log(err.message);
-        });
+        // LOOK UP THE POST
+  Post.findById(req.params.id).populate('comments').then((post) => {
+    res.render('posts-show', { post })
+  }).catch((err) => {
+    console.log(err.message)
+  })
     });
+ //show
+    // app.get("/posts/:id", function(req, res) {
+    //   // LOOK UP THE POST
+    //   Post.findById(req.params.id)
+    //     .then(post => {
+    //         console.log(post)
+    //       res.render("posts-show", { post });
+    //     })
+    //     .catch(err => {
+    //       console.log(err.message);
+    //     });
+    // });
     // SUBREDDIT
    app.get("/n/:subreddit", function(req, res) {
      Post.find({ subreddit: req.params.subreddit })
@@ -54,6 +64,7 @@ module.exports = (app) => {
        });
    });
 }
+
 
 
 // app.get('/', (req, res) => {

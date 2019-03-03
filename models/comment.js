@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const Comment = require('../models/comment');
 
 
 const CommentSchema = new Schema({
@@ -8,4 +7,4 @@ const CommentSchema = new Schema({
 
 });
 
-module.exports = mongoose.model("comment", CommentSchema);
+module.exports = mongoose.model("Comment", CommentSchema);
