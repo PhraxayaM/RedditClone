@@ -6,13 +6,16 @@ const app = express()
 
 module.exports = (app) => {
 
+
+
     app.get('/', (req, res) => {
-        Post.find({})
-      .then(posts => {
-        res.render("sign-up", { posts });
+        var currentUser = req.user;
+    Post.find({})
+        .then(posts => {
+            res.render("posts-new", { posts, currentUser });
       })
       .catch(err => {
-        console.log(err.message);
+        console.log(err.message)
     })
 });
 
@@ -32,46 +35,29 @@ module.exports = (app) => {
       return res.redirect(`/`);
     })
   });
+
  // Show
     app.get("/posts/:id", function(req, res) {
+        var currentUser = req.user;
         // LOOK UP THE POST
   Post.findById(req.params.id).populate('comments').then((post) => {
-    res.render('posts-show', { post })
+    res.render('posts-show', { post, currentUser })
   }).catch((err) => {
     console.log(err.message)
   })
     });
- //show
-    // app.get("/posts/:id", function(req, res) {
-    //   // LOOK UP THE POST
-    //   Post.findById(req.params.id)
-    //     .then(post => {
-    //         console.log(post)
-    //       res.render("posts-show", { post });
-    //     })
-    //     .catch(err => {
-    //       console.log(err.message);
-    //     });
-    // });
+
     // SUBREDDIT
    app.get("/n/:subreddit", function(req, res) {
+       var currentUser = req.user;
+
      Post.find({ subreddit: req.params.subreddit })
        .then(posts => {
-         res.render("posts-index", { posts });
+         res.render("posts-index", { posts, currentUser });
        })
        .catch(err => {
          console.log(err);
        });
    });
+
 }
-
-
-
-// app.get('/', (req, res) => {
-//     Post.find({})
-//   .then(posts => {
-//     res.render("posts-index", { posts });
-//   })
-//   .catch(err => {
-//     console.log(err.message);
-// })
