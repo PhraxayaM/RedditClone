@@ -8,33 +8,36 @@ module.exports = (app) => {
 
 
 
-    app.get('/', (req, res) => {
-        var currentUser = req.user;
-    Post.find({})
+    app.get("/", (req, res) => {
+      var currentUser = req.user;
+
+      Post.find({})
         .then(posts => {
-            res.render("posts-new", { posts, currentUser });
-      })
-      .catch(err => {
-        console.log(err.message)
-    })
-});
+          res.render("posts-index", { posts, currentUser });
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+    });
 
-  // CREATE
+// New
+   app.get('/posts/new', (req, res) => {
+       var currentUser = req.user;
+       res.render('posts-new', currentUser );
+   })
 
-  app.post('/posts/new', (req, res) => {
-      console.log("button works")
-      console.log(req.body)
-    // INSTANTIATE INSTANCE OF POST MODEL
-    const post = new Post(req.body);
-    // SAVE INSTANCE OF POST MODEL TO DB
-    post.save((err, post) => {
-        if (err) {
-            console.log(err)
-        }
-      // REDIRECT TO THE ROOT
-      return res.redirect(`/`);
-    })
-  });
+   // CREATE
+   app.post("/posts/new", (req, res) => {
+     if (req.user) {
+       var post = new Post(req.body);
+
+       post.save(function(err, post) {
+         return res.redirect(`/`);
+       });
+     } else {
+       return res.status(401); // UNAUTHORIZED
+     }
+   }); 
 
  // Show
     app.get("/posts/:id", function(req, res) {

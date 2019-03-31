@@ -13,24 +13,8 @@ var exphbs = require('express-handlebars');
 // Use Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-// Set db
-require('./data/reddit-db');
-require('./controllers/posts.js')(app);
-require('./controllers/comments.js')(app);
-require('./controllers/auth.js')(app);
 
 
-// Add after body parser initialization!
-app.use(expressValidator());
-
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
-app.set('view engine', 'handlebars');
-
-app.use(cookieParser());
-
-// app.get('/', (req, res) => {
-//   res.send({posts})
-// })
 
 var checkAuth = (req, res, next) => {
   console.log("Checking authentication");
@@ -44,8 +28,20 @@ var checkAuth = (req, res, next) => {
 
   next();
 };
-app.use(checkAuth);
 
+app.use(cookieParser());
+
+// Add after body parser initialization!
+app.use(expressValidator());
+
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
+app.use(checkAuth);
+// Set db
+require('./data/reddit-db');
+require('./controllers/posts.js')(app);
+require('./controllers/comments.js')(app);
+require('./controllers/auth.js')(app);
 
 app.listen(3000, () => {
   console.log('App listening on port 3000!')

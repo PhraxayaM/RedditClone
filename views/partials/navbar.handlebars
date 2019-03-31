@@ -1,10 +1,43 @@
-<ul class="nav navbar-nav navbar-right">
-     {{#if currentUser}}
-      <li><a href="/logout">Logout</a></li>
-      {{else}}
-      <li><a href="/login">Login</a></li>
-      <li><a href="/sign-up">Sign Up</a></li>
-      {{/if}}
-    </ul>
-  </div>
-</div>
+<!doctype html>
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+</html>
+
+<title>Reddit.js</title>
+</head>
+<body>
+
+    <nav class=" -expand-lg -light bg-light">
+      <a class="-brand" href="/">Reddit.js</a>
+      <button class="-toggler" type="button" data-toggle="collapse" data-target="#SupportedContent" aria-controls="SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="-toggler-icon"></span>
+      </button>
+    </nav>
+
+            </nav>
+</ul>
+    <div class="container-fluid">
+        <ul class="nav navbar-nav navbar-right">
+            {{#if currentUser}}
+            <li><a href="/logout">Logout</a></li>
+            {{/if}}
+            <li><a href="/login">Login</a></li>
+            <li><a href="/sign-up">Sign Up</a></li>
+            {{#if currentUser}}
+            <a href="/posts/new" class="btn btn-primary navbar-btn">New Post</a>
+            {{/if}}
+        </ul>
+                  </div>
+
+    {{{body}}}
+
+</body>
