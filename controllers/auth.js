@@ -35,6 +35,10 @@ module.exports = (app) => {
 app.get('/login', (req, res) => {
   res.render('login');
 });
+// LOGIN FORM
+app.get('/posts-show', (req, res) => {
+res.render('posts-show');
+});
 // LOGIN
 app.post("/login", (req, res) => {
   const username = req.body.username;
