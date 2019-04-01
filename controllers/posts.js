@@ -23,36 +23,6 @@ module.exports = (app) => {
             })
         })
 
-//
-//     // CREATE
-// app.post("/posts/new", (req, res) => {
-//   if (req.user) {
-//     var post = new Post(req.body);
-//
-//     post.save(function(err, post) {
-//       return res.redirect(`/`);
-//     });
-//   } else {
-//     return res.status(401); // UNAUTHORIZED
-//   }
-// });
-
-    // CREATE
-
-    // app.post('/posts/new', (req, res) => {
-    //     console.log("button works")
-    //     console.log(req.body)
-    //   // INSTANTIATE INSTANCE OF POST MODEL
-    //   const post = new Post(req.body);
-    //   // SAVE INSTANCE OF POST MODEL TO DB
-    //   post.save((err, post) => {
-    //       if (err) {
-    //           console.log(err)
-    //       }
-    //     // REDIRECT TO THE ROOT
-    //     return res.redirect(`/`);
-    //   })
-    // });
 
     // CREATE
       app.post("/posts/new", (req, res) => {
@@ -81,22 +51,20 @@ module.exports = (app) => {
 
 // SHOW
 app.get("/posts/:id", function (req, res) {
-   var currentUser = req.user;
-   // LOOK UP THE POST
-
-   Post.findById(req.params.id).populate({path:'comments', populate: {path: 'author'}}).populate('author')
-       .then(post => {
-           res.render("posts-show", { post, currentUser });  
-       })
-       .catch(err => {
-           console.log(err.message);
-       });
+    var currentUser = req.user;
+    Post.findById(req.params.id).populate('comments').lean()
+        .then(post => {
+            res.render("posts-show", { post, currentUser });
+        })
+        .catch(err => {
+            console.log(err.message);
+        });
 });
 
-    // SUBREDDIT
+// SUBREDDIT
 app.get("/n/:subreddit", function (req, res) {
     var currentUser = req.user;
-    Post.find({ subreddit: req.params.subreddit }).populate('author')
+    Post.find({ subreddit: req.params.subreddit }).lean()
         .then(posts => {
             res.render("posts-index", { posts, currentUser });
         })
