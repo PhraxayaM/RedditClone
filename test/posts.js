@@ -54,7 +54,8 @@ it('Should create with valid attributes at POST /posts/new', function(done) {
     .catch(function (err) {
         done(err);
     });
-//     after(function () {
-//   Post.findOneAndDelete(newPost);
+    after(function () {
+  Post.findOneAndDelete(newPost);
+});
 });
 });
