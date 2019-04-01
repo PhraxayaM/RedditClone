@@ -2,10 +2,12 @@ const Post = require('../models/post');
 const expressValidator = require('express-validator');
 const express = require('express')
 const app = express()
+const User = require("../models/users");
+
+
 
 
 module.exports = (app) => {
-
 
 
     app.get("/", (req, res) => {
@@ -13,31 +15,69 @@ module.exports = (app) => {
 
       Post.find({})
         .then(posts => {
-          res.render("posts-index", { posts, currentUser });
+          res.render("posts-new", { posts, currentUser });
         })
         .catch(err => {
           console.log(err.message);
         });
     });
 
-// New
-   app.get('/posts/new', (req, res) => {
-       var currentUser = req.user;
-       res.render('posts-new', currentUser );
-   })
+//
+//     // CREATE
+// app.post("/posts/new", (req, res) => {
+//   if (req.user) {
+//     var post = new Post(req.body);
+//
+//     post.save(function(err, post) {
+//       return res.redirect(`/`);
+//     });
+//   } else {
+//     return res.status(401); // UNAUTHORIZED
+//   }
+// });
 
-   // CREATE
-   app.post("/posts/new", (req, res) => {
-     if (req.user) {
-       var post = new Post(req.body);
+    // CREATE
 
-       post.save(function(err, post) {
-         return res.redirect(`/`);
-       });
-     } else {
-       return res.status(401); // UNAUTHORIZED
-     }
-   }); 
+    // app.post('/posts/new', (req, res) => {
+    //     console.log("button works")
+    //     console.log(req.body)
+    //   // INSTANTIATE INSTANCE OF POST MODEL
+    //   const post = new Post(req.body);
+    //   // SAVE INSTANCE OF POST MODEL TO DB
+    //   post.save((err, post) => {
+    //       if (err) {
+    //           console.log(err)
+    //       }
+    //     // REDIRECT TO THE ROOT
+    //     return res.redirect(`/`);
+    //   })
+    // });
+
+    // CREATE
+      app.post("/posts/new", (req, res) => {
+          if (req.user) {
+              var post = new Post(req.body);
+              post.author = req.user._id;
+
+              post
+                  .save()
+                  .then(post => {
+                      return User.findById(req.user._id);
+                  })
+                  .then(user => {
+                      user.posts.unshift(post);
+                      user.save();
+                      // REDIRECT TO THE NEW POST
+                      res.redirect(`/posts/${post._id}`);
+                  })
+                  .catch(err => {
+                      console.log(err.message);
+                  });
+          } else {
+              return res.status(401); // UNAUTHORIZED
+          }
+
+});
 
  // Show
     app.get("/posts/:id", function(req, res) {

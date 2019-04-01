@@ -6,6 +6,10 @@ module.exports = (app) => {
   app.get("/sign-up", (req, res) => {
     res.render("sign-up");
   });
+  // New POST FORM
+  app.get("/posts-new", (req, res) => {
+    res.render("posts-new");
+  });
 
   // SIGN UP POST
   app.post("/sign-up", (req, res) => {
