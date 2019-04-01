@@ -7,6 +7,7 @@ module.exports = function(app) {
 app.post("/posts/:postId/comments", function(req, res) {
   // INSTANTIATE INSTANCE OF MODEL
   const comment = new Comment(req.body);
+  comment.author = req.user._id;
   console.log(comment);
   console.log(req.body);
 
@@ -18,7 +19,7 @@ app.post("/posts/:postId/comments", function(req, res) {
           return Post.findById(req.params.postId);
         })
         .then(post => {
-          // post.comments.unshift(comment);
+          post.comments.unshift(comment);
           return post.save();
         })
         .then(post => {
