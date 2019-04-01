@@ -14,10 +14,11 @@ app.post("/posts/:postId/comments", function(req, res) {
   comment
     .save()
     .then(comment => {
+        console.log("save works")
           return Post.findById(req.params.postId);
         })
         .then(post => {
-          post.comments.unshift(comment);
+          // post.comments.unshift(comment);
           return post.save();
         })
         .then(post => {

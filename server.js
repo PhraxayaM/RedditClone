@@ -24,16 +24,16 @@ var checkAuth = (req, res, next) => {
 
   next();
 };
+app.use(cookieParser());
 
+
+app.use(checkAuth);
 // Use Body Parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 
-app.use(cookieParser());
 
-
-app.use(checkAuth);
 // Set db
 require('./data/reddit-db');
 require('./controllers/posts.js')(app);
