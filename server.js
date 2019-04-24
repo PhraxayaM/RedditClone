@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const express = require('express')
 const app = express()
+const path = require('path')
 // const Post = require('../models/post');
 
 
@@ -32,7 +33,10 @@ app.use(checkAuth);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(express.static(path.join(__dirname, 'public')));
 
+// Add after body parser initialization!
+app.use(expressValidator());
 
 // Set db
 require('./data/reddit-db');
@@ -41,8 +45,7 @@ require('./controllers/comments.js')(app);
 require('./controllers/auth.js')(app);
 require('./controllers/replies.js')(app);
 
-// Add after body parser initialization!
-app.use(expressValidator());
+
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');

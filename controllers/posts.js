@@ -53,12 +53,13 @@ module.exports = (app) => {
 app.get("/posts/:id", function (req, res) {
     var currentUser = req.user;
     Post.findById(req.params.id).populate('comments').lean()
-        .then(post => {
-            res.render("posts-show", { post, currentUser });
-        })
-        .catch(err => {
-            console.log(err.message);
-        });
+          .then(post => {
+              console.log('post: ', post)
+              res.render("posts-show", { post, currentUser });
+          })
+          .catch(err => {
+              console.log(err.message);
+          });
 });
 
 // SUBREDDIT

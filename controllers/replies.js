@@ -6,21 +6,7 @@ module.exports = app => {
 
 
 
-  // NEW REPLY
-  app.get("/posts/:postId/comments/:commentId/replies/new", (req, res) => {
-    let post;
-    Post.findById(req.params.postId)
-      .then(p => {
-        post = p;
-        return Comment.findById(req.params.commentId);
-      })
-      .then(comment => {
-        res.render("replies-new", { post, comment });
-      })
-      .catch(err => {
-        console.log(err.message);
-      });
-  });
+
 
   // CREATE REPLY
   app.post("/posts/:postId/comments/:commentId/replies", (req, res) => {
@@ -32,6 +18,7 @@ module.exports = app => {
   Post.findById(req.params.postId)
       .then(post => {
           // FIND THE CHILD COMMENT
+          console.log(">>>>>> ", post, reply)
           Promise.all([
               reply.save(),
               Comment.findById(req.params.commentId),
@@ -51,5 +38,20 @@ module.exports = app => {
           // SAVE THE CHANGE TO THE PARENT DOCUMENT
           return post.save();
       })
+  });
+  // NEW REPLY
+  app.get("/posts/:postId/comments/:commentId/replies/new", (req, res) => {
+    let post;
+    Post.findById(req.params.postId)
+      .then(p => {
+        post = p;
+        return Comment.findById(req.params.commentId);
+      })
+      .then(comment => {
+        res.render("replies-new", { post, comment });
+      })
+      .catch(err => {
+        console.log(err.message);
+      });
   });
 };
