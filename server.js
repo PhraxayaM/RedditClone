@@ -38,6 +38,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Add after body parser initialization!
 app.use(expressValidator());
 
+
+// Look for static files in public folder
+app.use(express.static('public'));
+
 // Set db
 require('./data/reddit-db');
 require('./controllers/posts.js')(app);
